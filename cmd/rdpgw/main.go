@@ -4,6 +4,12 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+	"log"
+	"net/http"
+	"net/url"
+	"os"
+	"strconv"
+
 	"github.com/bolkedebruin/gokrb5/v8/keytab"
 	"github.com/bolkedebruin/gokrb5/v8/service"
 	"github.com/bolkedebruin/gokrb5/v8/spnego"
@@ -18,11 +24,6 @@ import (
 	"github.com/thought-machine/go-flags"
 	"golang.org/x/crypto/acme/autocert"
 	"golang.org/x/oauth2"
-	"log"
-	"net/http"
-	"net/url"
-	"os"
-	"strconv"
 )
 
 const (
@@ -39,6 +40,7 @@ var conf config.Configuration
 func initOIDC(callbackUrl *url.URL) *web.OIDC {
 	// set oidc config
 	provider, err := oidc.NewProvider(context.Background(), conf.OpenId.ProviderUrl)
+	fmt.Println("xxxxxx:", conf.OpenId.ProviderUrl)
 	if err != nil {
 		log.Fatalf("Cannot get oidc provider: %s", err)
 	}
